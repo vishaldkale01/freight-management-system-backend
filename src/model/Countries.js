@@ -12,7 +12,6 @@ module.exports = function (sequelize, DataTypes) {
             country_name : {
               type : DataTypes.STRING,
               allowNull: false,
-              unique: true,
           
         }
           },

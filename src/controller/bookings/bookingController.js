@@ -1,15 +1,21 @@
 const { bookings , customers , clients , drivers , driverDocuments , vehicles} = require("../../model");
 const { Op, Model } = require("sequelize");
+const successResponce = require("../../responses/successResponce");
+const errorResponce = require("../../responses/ErrorResponce");
+const HandleDbErrors = require("../../validators/dbValidation");
 const Booking = bookings;
 // Create a new booking
 const createBooking = async (req, res) => {
   try {
+    let validate =  CommonValidator(req.body , clientSchema) 
+      if (!validate.validate) {
+        return errorResponce(res, 422, validate.data , "validation error in Creatbooking fun >>>>>>>>>>>>>>>>>>>>>>>>>>>")
+      }
     const newBooking = await Booking.create(req.body);
-    res.status(201).json(newBooking);
+    successResponce(res,"bookins is created" , newBooking , 201)
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+    HandleDbErrors(error , res , "")
+      }
 };
 
 // Get all bookings
@@ -43,11 +49,13 @@ const getAllBookings = async (req, res) => {
 const getBookingById = async (req, res) => {
   const { bookingId } = req.params;
   try {
+    
     const booking = await Booking.findByPk(bookingId);
     if (booking) {
       res.status(200).json(booking);
     } else {
-      res.status(404).json({ error: "Booking not found" });
+      errorResponce(res , 404 , "" ,  `Booking not found for ${bookingId}` )
+      // res.status(404).json({ error: "Booking not found" });
     }
   } catch (error) {
     console.error(error);

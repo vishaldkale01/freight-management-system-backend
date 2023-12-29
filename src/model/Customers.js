@@ -19,12 +19,11 @@ module.exports = function (sequelize, DataTypes) {
           email: {
             type: DataTypes.STRING(255),
             allowNull: false,
-            unique: true,
             validate: {
               isEmail: true,
             },
           },
-          phone_number: {
+          phone: {
             type: DataTypes.INTEGER(20),
           },
           Tax_reg_no: {
@@ -62,9 +61,8 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(255),
           },
           username: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(250),
             allowNull: false,
-            unique: true,
           },
           password: {
             type: DataTypes.STRING(255),

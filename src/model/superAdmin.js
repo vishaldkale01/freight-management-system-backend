@@ -13,7 +13,6 @@
       phone: {
         type: DataTypes.BIGINT(12),
         allowNull: false,
-        unique: true,
       },
       password: {
         type: DataTypes.STRING,

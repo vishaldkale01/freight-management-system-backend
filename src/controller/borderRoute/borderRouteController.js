@@ -1,4 +1,6 @@
 const db = require("../../model");
+const errorResponce = require("../../responses/ErrorResponce");
+const successResponce = require("../../responses/successResponce");
 
 const borderRoutes = db.borderRoutes 
 const borders = db.border 
@@ -108,8 +110,8 @@ const routeController = {
 
         // Create and associate new borders
         const routeBorders = await Promise.all(
-          borders.map(async (borders) => {
-            const createdBorder = await border.create(borders);
+          borders.map(async (border) => {
+            const createdBorder = await borders.create(border);
             return createdBorder;
           })
         );
@@ -147,6 +149,16 @@ const routeController = {
       res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
   },
-};
+  createBorder : async (req, res) =>{
+    try {
+      const newBorder = await  db.border.create(req.body)
+      successResponce(res , "new border added" , newBorder,201 )
+    } catch (error) {
+      errorResponce(res , 500 , error , "" )
+    }
+  }
+}
+
+
 
 module.exports = routeController;

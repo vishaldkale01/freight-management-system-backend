@@ -17,7 +17,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         invoiceNumber: {
           type: DataTypes.STRING,
-          unique: true,
           allowNull: false
         },
         booking_id: {

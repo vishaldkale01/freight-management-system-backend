@@ -1,12 +1,11 @@
 module.exports = function (sequelize, DataTypes) {
     const Booking = sequelize.define('bookings', 
     {
-        booking_id: {
+      booking_id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
-        
         // Customer Details
         customer_id: {
           type: DataTypes.INTEGER,

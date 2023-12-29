@@ -3,6 +3,8 @@ const { createBooking  , getAllBookings , getBookingById , updateBookingById , d
 
 const   router = express.Router();
 
+
+
 router.post("/" , createBooking)
 router.get("/" , getAllBookings)
 router.get('/:id', getBookingById)

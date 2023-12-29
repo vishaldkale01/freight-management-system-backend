@@ -12,9 +12,8 @@ const CompanySchema = Joi.object({
   }),
   email: Joi.string()
   .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net' , 'in'] } }), 
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
-  repeat_password: Joi.ref("password"),
-}).unknown(true).with('password', 'repeat_password');
+  password: Joi.string()
+}).unknown(true)
 
 const AuthSchema = Joi.object().keys({
   username: Joi.string().required(),

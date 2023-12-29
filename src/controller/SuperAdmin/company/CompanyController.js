@@ -41,31 +41,32 @@ const  addCompany = async (req, res, next) => {
       })
     }
   }
-  // updateCompany: async (req, res, next) => {
-  //   try {
-  //     const company_id = req.params.id;
-  //     const { business_name, phone } = req.body;  
-  //     req.body.slug = toSlug(req.body.business_name);
-  //     if (req.file) {
-  //       req.body.business_logo = req.file.key;
-  //     }
-  //     const [updatedRows] = await Company.update(req.body, {
-  //       where: { id: company_id },
-  //     }).catch((err) => {
-  //       throw createHttpError.InternalServerError();
-  //     });
-  //     if (!updatedRows) throw createHttpError.InternalServerError();
-  //     res.status(200).send({ status: true });
-  //   } catch (err) {
-  //     if (req.file) {
-  //       deleteS3File(req.file.key);
-  //     }
-  //     res.status(500).send({
-  //       status: false,
-  //       message: err.message,
-  //     });
-  //   }
-  // },
+  
+  const updateCompany = async (req, res, next) => {
+    try {
+      const company_id = req.params.id;
+      const { business_name, phone } = req.body;  
+      if (req.file) {
+        req.body.business_logo = req.file.key;
+      }
+      const [updatedRows] = await Company.update(req.body, {
+        where: { id: company_id },
+      }).catch((err) => {
+        throw createHttpError.InternalServerError();
+      });
+      if (!updatedRows) throw createHttpError.InternalServerError();
+      res.status(200).send({ status: true });
+    } catch (err) {
+      if (req.file) {
+        deleteS3File(req.file.key);
+      }
+      res.status(500).send({
+        status: false,
+        message: err.message,
+      });
+    }
+  }
+
   // deleteCompany: async (req, res, next) => {
   //   try {
   //     const company_id = req.params.id;
@@ -116,4 +117,4 @@ const  addCompany = async (req, res, next) => {
     }
   }
 
-module.exports = {addCompany , getCompanies , getCompany}
+module.exports = {addCompany , getCompanies , getCompany , updateCompany}

@@ -10,7 +10,6 @@ module.exports = function (sequelize, DataTypes) {
           state_name: {
             type: DataTypes.STRING, 
             allowNull: false,
-            unique: true
           },
           country_id: {
             type: DataTypes.INTEGER,

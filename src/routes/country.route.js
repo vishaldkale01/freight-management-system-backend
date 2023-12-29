@@ -5,8 +5,13 @@ const countriesController = require("../controller/location/countryController");
 const stateController = require("../controller/location/stateController.js")
 const cityController = require("../controller/location/cityController.js")
 // Create a new country
-router.post('/countries', countriesController.createCountry);
-router.post('/states', stateController.createState);
+const { countries } = require("../model");
+const verifyMiddleware = require('../middleware/verifyUniqueMiddlware.js');
+
+const check =  verifyMiddleware(countries)
+
+router.post('/countries', check , countriesController.createCountry);
+router.post('/states',   stateController.createState);
 router.post('/citys', cityController.CreateCity);
 
 router.get('/states', stateController.getAllState);

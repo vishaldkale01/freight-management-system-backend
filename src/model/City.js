@@ -9,7 +9,6 @@ module.exports = function (sequelize, DataTypes) {
         city_name: {
           type: DataTypes.STRING(255),
           allowNull: false,
-          unique: true
         },
         state_id: {
           type: DataTypes.INTEGER,

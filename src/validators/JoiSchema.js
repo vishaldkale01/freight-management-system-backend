@@ -15,7 +15,7 @@ const driverSchema = Joi.object({
     documentType: Joi.string().required(),
     documentPath: Joi.string().required(),
     driver_id: Joi.number().integer().required(),
-  }).unknown(true);;
+  }).unknown(true);
 
   const countriesJoiSchema = Joi.object({
     country_name: Joi.string().required(),
@@ -42,4 +42,18 @@ const vehicleJoiSchema = Joi.object({
   driver_id: Joi.number().integer().positive().required(),
 });
 
-  module.exports = {driverSchema , driverDocumentSchema , countriesJoiSchema , statesJoiSchema , cityJoiSchema , vehicleJoiSchema}
+const bookings = Joi.object({
+  customer_id: Joi.number().integer().positive().required(),
+  customerCreditLimit: Joi.number().positive().required(),
+  customerCreditUsed: Joi.number().positive().required(),
+  client_id: Joi.number().integer().positive().required(),
+  routeName: Joi.string().required(),
+  routeFare: Joi.number().positive().required(),
+  allBordersFare: Joi.number().positive().required(),
+  driver_id: Joi.number().integer().positive().required(),
+  remarkOnDriver: Joi.string().required(),
+  amountPaidToDriver: Joi.number().positive().required(),
+  attitude: Joi.string().valid('Positive', 'Negative', 'Neutral').required(),
+}).unknown(true)
+
+  module.exports = {driverSchema , driverDocumentSchema , countriesJoiSchema , statesJoiSchema , cityJoiSchema , vehicleJoiSchema , bookings}

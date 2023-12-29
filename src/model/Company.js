@@ -13,11 +13,11 @@
       },
       
       business_type: {
-        type: DataTypes.TINYINT(1),
+        type: DataTypes.INTEGER,
         defaultValue: 0,
       },
       business_logo: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING
       },
       business_name: {
         type: DataTypes.STRING(100),
@@ -26,12 +26,12 @@
         type: DataTypes.STRING(100),
       },
       phone: {
-        type: DataTypes.BIGINT(250),
+        type: DataTypes.STRING(50),
         allowNull: false,
-        unique: true,
+        
       },
       whatsapp_contact: {
-        type: DataTypes.BIGINT(12),
+        type: DataTypes.STRING(50),
         allowNull: false,
         defaultValue: 0
       },
@@ -40,7 +40,7 @@
         type: DataTypes.STRING,
       },
       subscription_type: {
-        type: DataTypes.TINYINT(1),
+        type: DataTypes.INTEGER(5),
         defaultValue: 0,
       },
       gateway_enabled: {
@@ -48,7 +48,7 @@
         defaultValue: false,
       },
       gateway_type: {
-        type: DataTypes.TINYINT(1),
+        type: DataTypes.INTEGER,
         defaultValue: 0,
       },
       gateway_merchant_id: {

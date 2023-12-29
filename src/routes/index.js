@@ -17,7 +17,7 @@ router.use("/auth", authRoutes);
 router.use("/user" , customersRoutes)
 router.use("/client" , clientRoutes )
 // router.use("/company", verifyUserCookieAccessToken, companyRoutes);
-router.use("/company",  companyRoutes);
+router.use("/companies",  companyRoutes);
 router.use("/drivers",  driverRoute);
 router.use("/",  driverDocuments);
 router.use("/location",  country);

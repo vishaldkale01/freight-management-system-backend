@@ -14,7 +14,6 @@ module.exports = function (sequelize, DataTypes) {
         documentNumber: {
           type: DataTypes.STRING,
           allowNull: false ,
-          unique : true
         },
         documentPath: {
           type: DataTypes.STRING,
