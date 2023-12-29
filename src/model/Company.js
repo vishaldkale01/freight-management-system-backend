@@ -1,23 +1,26 @@
-  module.exports = function (sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const Company = sequelize.define(
     "company",
     {
-      id: {
+      company_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      Admin_id: {
+      super_admin_id: {
         type: DataTypes.INTEGER,
-        foreignKey : true
+        references: {
+          model: "super_admins",
+          key: "super_admin_id",
+        },
       },
-      
+
       business_type: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
       business_logo: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       business_name: {
         type: DataTypes.STRING(100),
@@ -28,12 +31,11 @@
       phone: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        
       },
       whatsapp_contact: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        defaultValue: 0
+        defaultValue: 0,
       },
 
       password: {
@@ -60,6 +62,9 @@
       email: {
         type: DataTypes.STRING(100),
       },
+      address: {
+        type: DataTypes.STRING,
+      },
       citys: {
         type: DataTypes.STRING,
       },
@@ -69,12 +74,33 @@
       pincode: {
         type: DataTypes.STRING(10),
       },
-      address: {
+      country_name: {
         type: DataTypes.STRING,
+      },
+      address1: {
+        type: DataTypes.STRING,
+        allowNull : true
+      },
+      citys1: {
+        type: DataTypes.STRING,
+        allowNull : true
+      },
+      state1: {
+        type: DataTypes.STRING,
+        allowNull : true
+      },
+      pincode1: {
+        type: DataTypes.STRING(10),
+        allowNull : true
+      },
+      country_name1: {
+        type: DataTypes.STRING,
+        allowNull : true
       },
       subscription_type: {
         type: DataTypes.TINYINT(1),
         defaultValue: 0,
+        allowNull : true
       },
       start_at: {
         type: DataTypes.DATE,
@@ -84,9 +110,6 @@
       },
       renewed_at: {
         type: DataTypes.DATE,
-      },
-      country_id: {
-        type: DataTypes.INTEGER,
       },
       currency_code: {
         type: DataTypes.STRING(5),

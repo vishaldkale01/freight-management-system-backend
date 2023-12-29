@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const CompanySchema = Joi.object({
   // let check ! 1st
-  Admin_id: Joi.number().required(),
+  adminId: Joi.number().required(),
   business_type: Joi.number().required(),
   // business_logo : Joi.string().uri()
   contact_person_full_name: Joi.string().min(3).max(150).required(),

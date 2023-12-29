@@ -1,7 +1,7 @@
 const Joi = require("joi")
 const driverSchema = Joi.object({
     name: Joi.string().required(),
-    contactNumber: Joi.string().required(),
+    phone: Joi.string().required(),
     whatsappNumber: Joi.string().required(),
     email: Joi.string().email().required(),
     address1: Joi.string().required(),
@@ -29,17 +29,18 @@ const driverSchema = Joi.object({
   const cityJoiSchema = Joi.object({
     city_name: Joi.string().max(255).required(),
     state_id: Joi.number().integer().positive().required(),
+    country_id : Joi.number().integer().positive().required(),
   });
 
 
 const vehicleJoiSchema = Joi.object({
   vehicle_id: Joi.number().integer().positive(),
   registrationNumber: Joi.string().required(),
+  capacityTons: Joi.number().required(),
   vehicleType: Joi.string().required(),
-  capacityTons: Joi.number().positive().required(),
-  currentLocation: Joi.string().allow(null),
-  available: Joi.boolean().required(),
-  driver_id: Joi.number().integer().positive().required(),
+  TruckDocument: Joi.string(),
+  TruckExpiryDate: Joi.string()
+
 });
 
 const bookings = Joi.object({

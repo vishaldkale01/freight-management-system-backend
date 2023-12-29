@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 // const cors =  require("cors")
 const cors = require('cors');
 const { APP_URL } = require("./src/config")
-const APP_PORT = process.env.APP_PORT
+const PORT = process.env.PORT
 const path = require("path") 
 const router = require("./src/routes");
 const connectDb = require("./src/config/connection");
@@ -16,7 +16,7 @@ var corsOptions = {
   credentials: true,
 };
 app.get("/", (req, res) => {
-  res.status(401).send({ status: false, message: "Invalid Credentials" });
+  res.status(201).send({ status: true, message: "Bhai server connect hai api thik se intrgarte karo 😎" });
 });
 
 global.appRoot = path.resolve(__dirname);
@@ -32,7 +32,7 @@ app.use("/uploads", express.static("./uploads"));
 app.use((req, res, next) => {
   res.status(404).json({
     status: false,
-    message: "Not Found",
+    message: `Please verify routes Method${req.method} route ${req.originalUrl}` ,
   });
 });
 app.use((err, req, res, next) => {
@@ -43,6 +43,6 @@ app.use((err, req, res, next) => {
   });
 });
 connectDb()
-app.listen(APP_PORT || 8081, () => {
-  console.log(`Server running on PORT ${APP_PORT}`);
+app.listen(process.env.PORT || 8081, () => {
+  console.log(`Server running on PORT ${PORT}`);
 });

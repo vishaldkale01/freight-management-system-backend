@@ -1,16 +1,17 @@
-const { bookings , customers , clients , drivers , driverDocuments , vehicles} = require("../../model");
+const { bookings , customers , clients , drivers , driver_documents , vehicles} = require("../../model");
 const { Op, Model } = require("sequelize");
 const successResponce = require("../../responses/successResponce");
 const errorResponce = require("../../responses/ErrorResponce");
 const HandleDbErrors = require("../../validators/dbValidation");
 const Booking = bookings;
+const CommonValidator = require("../../middleware/validators/CommonValidators")
 // Create a new booking
 const createBooking = async (req, res) => {
   try {
-    let validate =  CommonValidator(req.body , clientSchema) 
-      if (!validate.validate) {
-        return errorResponce(res, 422, validate.data , "validation error in Creatbooking fun >>>>>>>>>>>>>>>>>>>>>>>>>>>")
-      }
+    // let validate =  CommonValidator(req.body , clientSchema) 
+    //   if (!validate.validate) {
+    //     return errorResponce(res, 422, validate.data , "validation error in Creatbooking fun >>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    //   }
     const newBooking = await Booking.create(req.body);
     successResponce(res,"bookins is created" , newBooking , 201)
   } catch (error) {
@@ -24,7 +25,7 @@ const getAllBookings = async (req, res) => {
     bookings.belongsTo(customers, { foreignKey: "customer_id" });
     bookings.belongsTo(clients, { foreignKey: "client_id" });
     bookings.belongsTo(drivers, { foreignKey: "driver_id"});
-    drivers.belongsTo(driverDocuments, { foreignKey: 'driver_id'});
+    drivers.belongsTo(driver_documents, { foreignKey: 'driver_id'});
 
 
     const booking = await bookings.findAll({
@@ -33,7 +34,7 @@ const getAllBookings = async (req, res) => {
             { model: clients,  },
             { model: drivers ,
             include : [
-                {model : driverDocuments}
+                {model : driver_documents}
             ]
             },
           ],
@@ -47,14 +48,14 @@ const getAllBookings = async (req, res) => {
 
 // Get a single booking by ID
 const getBookingById = async (req, res) => {
-  const { bookingId } = req.params;
+  const{id} = req.params.id;
   try {
     
-    const booking = await Booking.findByPk(bookingId);
+    const booking = await Booking.findByPk(req.params.id);
     if (booking) {
       res.status(200).json(booking);
     } else {
-      errorResponce(res , 404 , "" ,  `Booking not found for ${bookingId}` )
+      errorResponce(res , 404 , "" ,  `Booking not found for ${booking_id}` )
       // res.status(404).json({ error: "Booking not found" });
     }
   } catch (error) {
@@ -65,10 +66,10 @@ const getBookingById = async (req, res) => {
 
 // Update a booking by ID
 const updateBookingById = async (req, res) => {
-  const { bookingId } = req.params;
+  const { booking_id } = req.params;
   try {
     const [updatedRows] = await Booking.update(req.body, {
-      where: { booking_id: bookingId },
+      where: { booking_id: booking_id },
     });
 
     if (updatedRows > 0) {
@@ -84,10 +85,10 @@ const updateBookingById = async (req, res) => {
 
 // Delete a booking by ID
 const deleteBookingById = async (req, res) => {
-  const { bookingId } = req.params;
+  const { booking_id } = req.params;
   try {
     const deletedRows = await Booking.destroy({
-      where: { booking_id: bookingId },
+      where: { booking_id: booking_id },
     });
 
     if (deletedRows > 0) {

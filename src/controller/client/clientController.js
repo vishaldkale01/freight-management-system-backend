@@ -56,9 +56,9 @@ const getUsers = async (req, res) => {
 
 const findUserById = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const user_id = req.params.id;
 
-    const user = await clients.findByPk(userId);
+    const user = await clients.findByPk(user_id);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -74,17 +74,17 @@ const findUserById = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    let userId = req.params.id;
-    if (typeof userId === "string") userId = parseInt(userId);
+    let user_id = req.params.id;
+    if (typeof user_id === "string") user_id = parseInt(user_id);
 
     const updateUser = await clients.update(req.body, {
-      where: { client_id: userId },
+      where: { client_id: user_id },
     });
 
     if (!updateUser) {
       return res.status(404).json({ error: 'User not found' });
     }
-    const findUser = await clients.findByPk(userId)
+    const findUser = await clients.findByPk(user_id)
 
     res.status(200).json(findUser.dataValues);
   } catch (error) {
@@ -106,10 +106,10 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const user_id = req.params.id;
 
     const deletedRowCount = await clients.destroy({
-      where: { client_id: userId },
+      where: { client_id: user_id },
     });
 
     if (deletedRowCount === 0) {

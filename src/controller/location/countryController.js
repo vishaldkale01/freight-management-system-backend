@@ -6,12 +6,12 @@ const HandleDbErrors = require("../../validators/dbValidation")
 
 countries.hasMany(states, {
   foreignKey: 'country_id',
-  onDelete: 'CASCADE', // Optional: Define the behavior on deletion
+  // onDelete: 'CASCADE', // Optional: Define the behavior on deletion
 });
 
 states.hasMany(citys, {
   foreignKey: 'state_id',
-  onDelete: 'CASCADE', // Optional: Define the behavior on deletion
+  // onDelete: 'CASCADE', // Optional: Define the behavior on deletion
 });
 
 

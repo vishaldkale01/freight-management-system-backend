@@ -32,9 +32,14 @@ module.exports = function (sequelize, DataTypes) {
           },
 
         },
-      
         // Route Details
-        routeName: DataTypes.STRING,
+        route_id: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'border__routes', 
+            key: 'route_id',
+          }},
         routeFare: DataTypes.FLOAT,
         allBordersFare: DataTypes.FLOAT,
         totalAmount: {

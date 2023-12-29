@@ -22,7 +22,6 @@ module.exports = function (sequelize, DataTypes) {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
     },
     address1: {
       type: DataTypes.STRING,
@@ -60,37 +59,45 @@ module.exports = function (sequelize, DataTypes) {
         key: 'document_id',
       },
     },
-    // passportExpiryDate: {
-    //   type: DataTypes.DATE,
-    //   allowNull: false
-    // },
-    // idCardNumber: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false
-    // },
-    // idCardExpiryDate: {
-    //   type: DataTypes.DATE,
-    //   allowNull: false
-    // },
-    // drivingLicenseNumber: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false
-    // },
-    // drivingLicenseExpiryDate: {
-    //   type: DataTypes.DATE,
-    //   allowNull: false
-    // },
-    // truckNumber: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false
-    // },
-    // truckExpiryDate: {
-    //   type: DataTypes.DATE,
-    //   allowNull: false
-    // },
+    passportExpiryDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    idCardNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    idCardExpiryDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    drivingLicenseNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    drivingLicenseExpiryDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    truckNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    truckExpiryDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
     status: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    truckType: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    remark: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
   },{
     timestamps: true,

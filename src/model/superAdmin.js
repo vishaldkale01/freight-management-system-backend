@@ -1,17 +1,17 @@
   module.exports = function (sequelize, DataTypes) {
   const SuperAdmin = sequelize.define(
-    "superAdmin",
+    "super_admins",
     {
-      id: {
+      super_admin_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      user_name: {
+      username: {
         type: DataTypes.STRING(100),
       },
       phone: {
-        type: DataTypes.BIGINT(12),
+        type: DataTypes.STRING(12),
         allowNull: false,
       },
       password: {
@@ -32,8 +32,8 @@
       address: {
         type: DataTypes.STRING,
       },
-      country_id: {
-        type: DataTypes.INTEGER,
+      country_name: {
+        type: DataTypes.STRING(250),
       },
       currency_code: {
         type: DataTypes.STRING(5),

@@ -48,12 +48,15 @@ const Vehicle = require("./Vehicle");
 const Invoice = require("./Invoice");
 const DriverDocuments = require("./DriverDocuments");
 const Border = require("./Border");
+const users = require("./users");
+const UserCompanyAssignment = require("./UserCompanyAssignment");
+
 
 // import Otp from "./Otp";
 // import Vendor from "./Vendor";
-// db.users = User(sequelize, DataTypes);
+db.users = users(sequelize, DataTypes);
 db.companies = Company(sequelize, DataTypes);
-db.superAdmin = SuperAdmin(sequelize, DataTypes);
+db.super_admins = SuperAdmin(sequelize, DataTypes);
 db. countries = Countries(sequelize, DataTypes);
 db.states = States(sequelize, DataTypes);
 db.citys = City(sequelize, DataTypes);
@@ -63,9 +66,11 @@ db.drivers = Driver(sequelize, DataTypes);
 db.bookings = Booking(sequelize, DataTypes);
 db.vehicles = Vehicle(sequelize, DataTypes);
 db.invoices = Invoice(sequelize, DataTypes);
-db.driverDocuments = DriverDocuments(sequelize, DataTypes);
-db. borderRoutes = BorderRoutes(sequelize, DataTypes);
+db.driver_documents = DriverDocuments(sequelize, DataTypes);
+db.border_Routes = BorderRoutes(sequelize, DataTypes);
 db.border = Border(sequelize, DataTypes);
+db.users = users(sequelize , DataTypes)
+db.user_company_assignments = UserCompanyAssignment(sequelize ,DataTypes)
 
 !// remove sync true
 db.sequelize.sync({ alter: false, force: false }).then(() => {

@@ -15,10 +15,10 @@ const getAllVehicles = async (req, res) => {
 
 // Controller to get a single vehicles by ID
 const getVehicleById = async (req, res) => {
-  const { vehicleId } = req.params;
+  const { vehicle_id } = req.params;
 
   try {
-    const Vehicle = await vehicles.findByPk(vehicleId);
+    const Vehicle = await vehicles.findByPk(vehicle_id);
 
     if (!Vehicle) {
       return res.status(404).json({ error: "Vehicle not found" });
@@ -37,9 +37,8 @@ const createVehicle = async (req, res) => {
     registrationNumber,
     vehicleType,
     capacityTons,
-    currentLocation,
-    available,
-    driver_id,
+    TruckExpiryDate,
+    TruckDocument
   } = req.body;
 
   let validate = CommonValidator(req.body, vehicleJoiSchema);
@@ -51,9 +50,8 @@ const createVehicle = async (req, res) => {
       registrationNumber,
       vehicleType,
       capacityTons,
-      currentLocation,
-      available,
-      driver_id,
+      TruckExpiryDate,
+          TruckDocument,
     });
 
     return res.status(201).json(newVehicle);
@@ -65,7 +63,7 @@ const createVehicle = async (req, res) => {
 
 // Controller to update a vehicles by ID
 const updateVehicleById = async (req, res) => {
-  const { vehicleId } = req.params;
+  const { vehicle_id } = req.params;
   const {
     registrationNumber,
     vehicleType,
@@ -76,7 +74,7 @@ const updateVehicleById = async (req, res) => {
   } = req.body;
 
   try {
-    const Vehicle = await vehicles.findByPk(vehicleId);
+    const Vehicle = await vehicles.findByPk(vehicle_id);
 
     if (!Vehicle) {
       return res.status(404).json({ error: "Vehicle not found" });
@@ -102,10 +100,10 @@ const updateVehicleById = async (req, res) => {
 
 // Controller to delete a vehicles by ID
 const deleteVehicleById = async (req, res) => {
-  const { vehicleId } = req.params;
+  const { vehicle_id } = req.params;
 
   try {
-    const Vehicle = await vehicles.findByPk(vehicleId);
+    const Vehicle = await vehicles.findByPk(vehicle_id);
 
     if (!vehicles) {
       return res.status(404).json({ error: "Vehicle not found" });

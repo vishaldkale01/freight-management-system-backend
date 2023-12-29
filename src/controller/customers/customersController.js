@@ -4,7 +4,7 @@ const { customers } = require("../../model");
 const { paginateResults } = require("../../util/commonPagination");
 const HandleDbErrors = require("../../validators/dbValidation");
 
-const createUser = async (req, res) => {
+const createCustomers = async (req, res) => {
   try {
    
     let validate =  CommonValidator(req.body , customerValidator) 
@@ -40,7 +40,7 @@ const createUser = async (req, res) => {
 //   }
 // };
 
-const getUsers = async (req, res) => {
+const getCustomers = async (req, res) => {
   try {
   
 
@@ -53,11 +53,11 @@ const getUsers = async (req, res) => {
   }
 };
 
-const findUserById = async (req, res) => {
+const findCustomersById = async (req, res) => {
   try {
-    const userId = req.params.id;
-    console.log(userId);
-    const user = await customers.findByPk(userId);
+    const user_id = req.params.id;
+    console.log(user_id);
+    const user = await customers.findByPk(user_id);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -71,12 +71,12 @@ const findUserById = async (req, res) => {
 };
 
 
-const updateUser = async (req, res) => {
+const updateCustomer = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const user_id = req.params.id;
     console.log(req.body)
     const [, updatedUser] = await customers.update(req.body, {
-      where: { customer_id: userId },
+      where: { customer_id: user_id },
       returning: true,
     });
 
@@ -91,12 +91,12 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteCustomer = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const user_id = req.params.id;
 
     const deletedRowCount = await Customer.destroy({
-      where: { customer_id: userId },
+      where: { customer_id: user_id },
     });
 
     if (deletedRowCount === 0) {
@@ -110,4 +110,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser , getUsers  , findUserById , updateUser};
+module.exports = { createCustomers , getCustomers  , findCustomersById , updateCustomer , deleteCustomer};

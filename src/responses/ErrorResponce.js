@@ -1,9 +1,10 @@
 const errorResponce =  (res, errorCOde ,error, errorMessage ) => {
-    const err = {}
-    if(error) err.error = error
-    if(errorMessage)  err.errorMessage = errorMessage
-     res.status(errorCOde).json({
-        err
+    const Data = {}
+    if(error) Data.error = error
+    if(errorMessage)  Data.errorMessage = errorMessage
+     return res.status(errorCOde).json({
+        success : false ,
+        Data 
     })
 }
 module.exports = errorResponce

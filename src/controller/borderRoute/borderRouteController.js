@@ -1,19 +1,50 @@
 const db = require("../../model");
 const errorResponce = require("../../responses/ErrorResponce");
 const successResponce = require("../../responses/successResponce");
+const JoinTable = require("../../util/service/JoinTable");
+const Asso =  async ()=> {
 
-const borderRoutes = db.borderRoutes 
-const borders = db.border 
+ return await JoinTable(db.border_Routes , db.border , "hasMany" , {} , "" ,{exclude:['createdAt' , 'updatedAt']} , "route_id" , "" )
+}
 
+
+const borders = db.border;
+db.border_Routes.belongsTo(db.countries, {
+  as: "destination_Country",
+  foreignKey: "destinationCountry",
+});
+db.border_Routes.belongsTo(db.countries, {
+  as: "origin_Country",
+  foreignKey: "originCountry",
+});
+db.border_Routes.belongsTo(db.states, {
+  as: "origin_State",
+  foreignKey: "originState",
+});
+db.border_Routes.belongsTo(db.states, {
+  as: "destination_State",
+  foreignKey: "destinationState",
+});
+db.border_Routes.belongsTo(db.citys, {
+      as: "origin_City",
+      foreignKey: "originCity",
+    });
+    db.border_Routes.belongsTo(db.citys, {
+      as: "destination_City",
+      foreignKey: "destinationCity",
+    });
+    db.border_Routes.belongsTo(db.border, {
+      as: "borders",
+      foreignKey: "route_id",
+    });
 // Controller functions for managing routes and borders
 const routeController = {
   // Create a new route with borders
   createRoute: async (req, res) => {
+    
     try {
-      const { originCountry, originState, originCity, destinationCountry, destinationState, destinationCity, totalFare, border , border_id } = req.body;
-
-      // Create the route
-      const newRoute = await borderRoutes.create({
+      const {
+        route_name,
         originCountry,
         originState,
         originCity,
@@ -21,42 +52,138 @@ const routeController = {
         destinationState,
         destinationCity,
         totalFare,
-        border_id
+        border,
+        borderId,
+      } = req.body;
+
+      // Create the route
+      const newRoute = await db.border_Routes.create({
+        originCountry,
+        originState,
+        originCity,
+        destinationCountry,
+        destinationState,
+        destinationCity,
+        totalFare,
+        route_name,
+        border
       });
 
       // Add borders to the route
       if (border && border.length > 0) {
         const routeBorders = await Promise.all(
           border.map(async (Newborder) => {
+            Newborder.route_id = newRoute.route_id
             const createdBorder = await borders.create(Newborder);
             return createdBorder;
           })
         );
-
         // await newRoute.addRouteBorders(routeBorders);
+      }else{
+        if(border){
+          border.route_id = newRoute.route_id
+          await borders.create(border);
+        } 
       }
 
-      res.status(201).json({ success: true, message: 'borderRoutes created successfully' });
+      successResponce(res, "border_Routes created successfully", newRoute, 201);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error,
+      });
     }
   },
 
+  getAllBorder: async (req, res) => {
+    
+    db.border.belongsTo(db.countries, { foreignKey: "country_id" });
+    try {
+      const routes = await db.border.findAll({
+        include: [{ model: db.countries, attributes: ["country_name"] }],
+      });
+      successResponce(res, "border", routes, 201);
+    } catch (error) {
+      errorResponce(res, 500, error, "internal server error");
+    }
+  },
   // Get all routes with borders
   getAllRoutes: async (req, res) => {
-    borderRoutes.belongsTo(borders, { foreignKey: 'border_id' });
+    let joinTab = await Asso()
+    console.log(joinTab);
+    // db.border_Routes.belongsTo(db.border, { as: "border" });
+    // db.border.belongsTo(db.countries, { foreignKey: "country_id"  , as /: "destinationCountry" });
 
+    // db.border_Routes.belongsTo(db.citys, {
+    //   as: "origin_City",
+    //   foreignKey: "originCity",
+    // });
+    // db.border_Routes.belongsTo(db.citys, {
+    //   as: "destination_City",
+    //   foreignKey: "destinationCity",
+    // });
 
+    // db.border_Routes.belongsTo(db.countries, {
+
+    // });
+    // db.border_Routes.belongsTo(db.states, { as: "originState" });
+    // db.border_Routes.belongsTo(db.states, { as: "destinationState" });
+    // db.border_Routes.belongsTo(db.citys,  { as: "originCity" });
+    // db.border_Routes.belongsTo(db.states, { as: "destinationCity" });
+    console.log(joinTab , "");
     try {
-      const routes = await borderRoutes.findAll({
-        include: [{ model: borders, }],
+      const routes = await db.border_Routes.findAll({
+        include: [
+          {
+            model: db.countries,
+            as: "destination_Country",
+            attributes: ["country_name"],
+          },
+          {
+            model: db.countries,
+            as: "origin_Country",
+            attributes: ["country_name"],
+          },
+          {
+            model: db.states,
+            as: "origin_State",
+            attributes: ["state_name"],
+          },
+          {
+            model: db.states,
+            as: "destination_State",
+            attributes: ["state_name"],
+          },
+          {
+            model: db.citys,
+            as: "destination_City",
+            attributes: ["city_name"],
+          },
+          {
+            model: db.citys,
+            as: "origin_City",
+            attributes: ["city_name"],
+          },
+          {
+            model: db.border,
+            as: "borders",
+            // attributes: ["city_name"],
+          },
+          // joinTab[0]
+        ],
+        attributes : {
+          exclude:['createdAt' , 'updatedAt', 'border']
+        }
       });
 
       res.status(200).json({ success: true, routes });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   },
 
@@ -65,18 +192,20 @@ const routeController = {
     try {
       const { id } = req.params;
 
-      const route = await borderRoutes.findByPk(id, {
-        include: [{ model: border, as: 'routeBorders' }],
-      });
+      const route = await db.border_Routes.findByPk(id);
 
       if (!route) {
-        return res.status(404).json({ success: false, message: 'borderRoutes not found' });
+        return res
+          .status(404)
+          .json({ success: false, message: "border_Routes not found" });
       }
 
       res.status(200).json({ success: true, route });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   },
 
@@ -84,12 +213,23 @@ const routeController = {
   updateRouteById: async (req, res) => {
     try {
       const { id } = req.params;
-      const { originCountry, originState, originCity, destinationCountry, destinationState, destinationCity, totalFare, borders } = req.body;
+      const {
+        originCountry,
+        originState,
+        originCity,
+        destinationCountry,
+        destinationState,
+        destinationCity,
+        totalFare,
+        borders,
+      } = req.body;
 
-      const route = await borderRoutes.findByPk(id);
+      const route = await border_Routes.findByPk(id);
 
       if (!route) {
-        return res.status(404).json({ success: false, message: 'borderRoutes not found' });
+        return res
+          .status(404)
+          .json({ success: false, message: "border_Routes not found" });
       }
 
       // Update route details
@@ -119,10 +259,14 @@ const routeController = {
         await route.addRouteBorders(routeBorders);
       }
 
-      res.status(200).json({ success: true, message: 'borderRoutes updated successfully' });
+      res
+        .status(200)
+        .json({ success: true, message: "border_Routes updated successfully" });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   },
 
@@ -131,10 +275,12 @@ const routeController = {
     try {
       const { id } = req.params;
 
-      const route = await borderRoutes.findByPk(id);
+      const route = await border_Routes.findByPk(id);
 
       if (!route) {
-        return res.status(404).json({ success: false, message: 'borderRoutes not found' });
+        return res
+          .status(404)
+          .json({ success: false, message: "border_Routes not found" });
       }
 
       // Delete associated borders
@@ -143,22 +289,24 @@ const routeController = {
       // Delete the route
       await route.destroy();
 
-      res.status(200).json({ success: true, message: 'borderRoutes deleted successfully' });
+      res
+        .status(200)
+        .json({ success: true, message: "border_Routes deleted successfully" });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   },
-  createBorder : async (req, res) =>{
+  createBorder: async (req, res) => {
     try {
-      const newBorder = await  db.border.create(req.body)
-      successResponce(res , "new border added" , newBorder,201 )
+      const newBorder = await db.border.create(req.body);
+      successResponce(res, "new border added", newBorder, 201);
     } catch (error) {
-      errorResponce(res , 500 , error , "" )
+      errorResponce(res, 500, error, "");
     }
-  }
-}
-
-
+  },
+};
 
 module.exports = routeController;

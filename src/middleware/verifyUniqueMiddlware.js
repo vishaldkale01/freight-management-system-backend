@@ -1,4 +1,5 @@
 const { Op } = require("sequelize");
+const { countries, states, citys } = require("../model");
 
 const verifyMiddleware = (Model) => {
   return async function check(req, res, next) {
@@ -79,15 +80,15 @@ console.log(where);
           errorObj.documentNumber = "documentNumber is already registered.";
           //   errorMessage.push("documentNumber is already registered.");
         }
-        if (existingUser.country_name === country_name && country_name) {
+        if (existingUser.country_name === country_name && country_name && Model.name === "countries") {
           errorObj.company_name = "country_name is already registered.";
           //   errorMessage.push("country_name is already registered.");
         }
-        if (existingUser.state_name === state_name && state_name) {
+        if (existingUser.state_name === state_name && Model.name === "states") {
           errorObj.state_name = "state name is already Registered.";
           //   errorMessage.push("state name is already Registered.");
         }
-        if (existingUser.city_name === city_name && city_name) {
+        if (existingUser.city_name === city_name && Model.name === "citys") {
           errorObj.city_name = "city name is already Registered.";
           //   errorMessage.push("city name is already Registered.");
         }
@@ -101,11 +102,11 @@ console.log(where);
           //   errorMessage.push("city name is already Registered.");
         }
 
-        return res.status(400).json({ success: false, message: errorObj });
+        return Object.keys(errorObj).length === 0 ? next() : res.status(400).json({ success: false, message: errorObj })
       }
 
       // If no matching record is found, continue to the next middleware
-      next();
+      next  ();
     } catch (error) {
       console.error("Error checking registration:", error);
       return res

@@ -4,7 +4,7 @@ const countriesWithStates = (countriesWithStates) =>{
       // Map the result to the desired format
       const result = filteredCountries.map((country) => {
         return {
-          Country_id: country.id,
+          country_id: country.id,
           country_name: country.name,
           createdAt: country.createdAt,
           updatedAt: country.updatedAt,

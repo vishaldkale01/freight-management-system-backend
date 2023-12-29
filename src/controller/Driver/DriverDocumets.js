@@ -1,27 +1,27 @@
 const CommonValidator = require('../../middleware/validators/CommonValidators');
-const { driverDocuments, drivers } = require('../../model');
+const { driver_documents, drivers } = require('../../model');
 const { driverDocumentSchema } = require('../../validators/JoiSchema');
 const HandleDbErrors = require('../../validators/dbValidation');
 
-driverDocuments.belongsTo(drivers, {
+driver_documents.belongsTo(drivers, {
   foreignKey: 'driver_id',
-  onDelete: 'CASCADE', // Delete documents when associated drivers is deleted
+  // onDelete: 'CASCADE', // Delete documents when associated drivers is deleted
 });
 
-drivers.hasMany(driverDocuments, {
+drivers.hasMany(driver_documents, {
   foreignKey: {
       name: 'driver_id',
       allowNull: false
   }
 });
 
-const AddDocuments = ('/driverDocuments', async (req, res) => {
+const AddDocuments = ('/driver_documents', async (req, res) => {
   try {
     let validate =  CommonValidator(req.body , driverDocumentSchema) 
       if (!validate.validate) {
         return res.send(validate.data)
       }
-    const newDriverDocument = await driverDocuments.create(req.body);
+    const newDriverDocument = await driver_documents.create(req.body);
     res.status(201).json(newDriverDocument);
   } catch (error) {
     // console.error(error);
@@ -33,7 +33,7 @@ const GetDriverDocumes = ("/all", async(req ,res)=>{
   try {
     const Documents = await drivers.findAll({
       include : {
-        model : driverDocuments,
+        model : driver_documents,
         attributes: { exclude: ['createdAt', 'updatedAt'] },      }
     });
     res.status(200).json(Documents)
@@ -43,20 +43,20 @@ const GetDriverDocumes = ("/all", async(req ,res)=>{
 })
 
 // Get all drivers documents
-const GetAllDocuments = ('/driverDocuments', async (req, res) => {
+const GetAllDocuments = ('/driver_documents', async (req, res) => {
   try {
-    const driverDocument = await driverDocuments.findAll({
+    const driverDocument = await driver_documents.findAll({
       // attributes : ["name","status"],
       include : {
         model : drivers,
-        attributes : ["name","contactNumber","status"],
+        attributes : ["name","phone","status"],
       }
     });
-    // const driverDocuments = await driverDocuments.findAll();
+    // const driver_documents = await driver_documents.findAll();
     const Documents = await drivers.findAll({
       // attributes : ["name","status"],
       include : {
-        model : driverDocuments,
+        model : driver_documents,
         // attributes : ["name","contactNumber","status"],
       }
     });
@@ -70,14 +70,14 @@ const GetAllDocuments = ('/driverDocuments', async (req, res) => {
 });
 
 // Get a specific drivers document by ID
-const GetSingledocuments = ('/driverDocuments/:document_id', async (req, res) => {
+const GetSingledocuments = ('/driver_documents/:document_id', async (req, res) => {
   const { document_id } = req.params;
   try {
-    const driverDocuments = await driverDocuments.findByPk(document_id);
-    if (!driverDocuments) {
+    const driver_document = await driver_documents.findByPk(document_id);
+    if (!driver_document) {
       return res.status(404).json({ error: 'Driver Document not found' });
     }
-    res.status(200).json(driverDocuments);
+    res.status(200).json(driver_document);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -85,16 +85,16 @@ const GetSingledocuments = ('/driverDocuments/:document_id', async (req, res) =>
 });
 
 // Update a specific drivers document by ID
-const Updatedocuments = ('/driverDocuments/:document_id', async (req, res) => {
+const Updatedocuments = ('/driver_documents/:document_id', async (req, res) => {
   const { document_id } = req.params;
   try {
-    const [updatedRows] = await driverDocuments.update(req.body, {
-      where: {documentId : document_id },
+    const [updatedRows] = await driver_documents.update(req.body, {
+      where: {document_id : document_id },
     });
     if (updatedRows === 0) {
       return res.status(404).json({ error: 'Driver Document not found' });
     }
-    const updatedDriverDocument = await driverDocuments.findByPk(document_id);
+    const updatedDriverDocument = await driver_documents.findByPk(document_id);
     res.status(200).json(updatedDriverDocument);
   } catch (error) {
     console.error(error);
@@ -103,10 +103,10 @@ const Updatedocuments = ('/driverDocuments/:document_id', async (req, res) => {
 });
 
 // Delete a specific drivers document by ID
-const DelteDocuments = ('/driverDocuments/:document_id', async (req, res) => {
+const DelteDocuments = ('/driver_documents/:document_id', async (req, res) => {
   const { document_id } = req.params;
   try {
-    const deletedRows = await DriverDocument.destroy({
+    const deletedRows = await driver_documents.destroy({
       where: { document_id },
     });
     if (deletedRows === 0) {

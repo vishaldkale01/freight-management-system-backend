@@ -1,16 +1,21 @@
 const  express = require("express");
-const { createUser, getUsers, findUserById, updateUser } = require("../controller/customers/customersController");
+const { createCustomers ,  getCustomers , findCustomersById , updateCustomer , deleteCustomer } = require("../controller/customers/customersController");
+const verifyMiddleware = require("../middleware/verifyUniqueMiddlware");
+const { customers } = require("../model");
 const router = express.Router();
+customers
+const check = verifyMiddleware(customers)
 // router.post(
 //   "/",
 //   upload.single("image"),
 //   verifyUserCookieAccessToken,
 //   UserController.addUser
 // );
-router.post("/customers" , createUser)
-router.get("/" , getUsers)
-router.get('/users/:id', findUserById)
-router.put('/:id', updateUser)
+router.post("/" , check , createCustomers)
+router.get("/" , getCustomers)
+router.get('/:id',  findCustomersById)
+router.put('/:id', updateCustomer)
+router.delete("/:id", deleteCustomer);
 // router.put(
 //   "/:id",a
 //   upload.single("image"),

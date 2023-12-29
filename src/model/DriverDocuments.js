@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    const DriverDocument = sequelize.define('driverDocuments',
+    const DriverDocument = sequelize.define('driver_documents',
      {
       document_id: {
           type: DataTypes.INTEGER,

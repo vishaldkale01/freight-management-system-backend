@@ -1,7 +1,7 @@
-const { borderRoutes, citys, states, countries } = require("../../model");
+const { border_Routes, citys, states, countries } = require("../../model");
 // ! border
-borderRoutes.belongsTo(citys, { foreignKey: 'source_city_id', as: 'sourceCity' });
-borderRoutes.belongsTo(citys, { foreignKey: 'destination_city_id', as: 'destinationCity' });
+border_Routes.belongsTo(citys, { foreignKey: 'source_city_id', as: 'sourceCity' });
+border_Routes.belongsTo(citys, { foreignKey: 'destination_city_id', as: 'destinationCity' });
  
 // citys
 

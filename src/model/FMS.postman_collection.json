@@ -256,7 +256,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3004/api/driverDocuments",
+							"raw": "http://localhost:3004/api/driver_documents",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -264,7 +264,7 @@
 							"port": "3004",
 							"path": [
 								"api",
-								"driverDocuments"
+								"driver_documents"
 							]
 						}
 					},
@@ -276,7 +276,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3004/api/driverDocuments",
+							"raw": "http://localhost:3004/api/driver_documents",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -284,7 +284,7 @@
 							"port": "3004",
 							"path": [
 								"api",
-								"driverDocuments"
+								"driver_documents"
 							]
 						}
 					},
@@ -296,7 +296,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3004/api/driverDocuments/1",
+							"raw": "http://localhost:3004/api/driver_documents/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -304,7 +304,7 @@
 							"port": "3004",
 							"path": [
 								"api",
-								"driverDocuments",
+								"driver_documents",
 								"1"
 							]
 						}
@@ -326,7 +326,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3004/api/driverDocuments/1",
+							"raw": "http://localhost:3004/api/driver_documents/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -334,7 +334,7 @@
 							"port": "3004",
 							"path": [
 								"api",
-								"driverDocuments",
+								"driver_documents",
 								"1"
 							],
 							"query": [
@@ -354,7 +354,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/driverDocuments/1",
+							"raw": "http://localhost:3000/api/driver_documents/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -362,7 +362,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"driverDocuments",
+								"driver_documents",
 								"1"
 							]
 						}
@@ -497,7 +497,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"originCountry\": \"1\",\n  \"originState\": \"1\",\n  \"originCity\": \"1\",\n  \"destinationCountry\": \"1\",\n  \"destinationState\": \"1\",\n  \"destinationCity\": \"1\",\n  \"totalFare\": 500.0,\n  \"border_id\" : 1 ,\n  \"border\": [\n    { \"Country_id\" : \"1\" , \"borderName\": \"US-Canada\", \"type\": \"Out\" , \"charges\" : 500  },\n    { \"Country_id\" : \"1\" , \"borderName\": \"Canada-US\", \"type\": \"In\" , \"charges\" : 500 }\n  ]\n}",
+							"raw": "{\n  \"originCountry\": \"1\",\n  \"originState\": \"1\",\n  \"originCity\": \"1\",\n  \"destinationCountry\": \"1\",\n  \"destinationState\": \"1\",\n  \"destinationCity\": \"1\",\n  \"totalFare\": 500.0,\n  \"border_id\" : 1 ,\n  \"border\": [\n    { \"country_id\" : \"1\" , \"borderName\": \"US-Canada\", \"type\": \"Out\" , \"charges\" : 500  },\n    { \"country_id\" : \"1\" , \"borderName\": \"Canada-US\", \"type\": \"In\" , \"charges\" : 500 }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -815,7 +815,7 @@
 							"raw": "{\n  \"company_name\": \"Updated Corp\",\n  \"contact_person\": \"Updated Doe\",\n  \"email\": \"updated.doe@example.com\",\n  \"phone_number\": 9876543210,\n  \"Tax_reg_no\": 123456789,\n  \"address\": \"Updated Main St\",\n  \"citys\": 3,\n  \"state\": 3,\n  \"postal_code\": 54321,\n  \"country\": 3,\n  \"address2\": \"Updated Second St\",\n  \"citys2\": 4,\n  \"state2\": 4,\n  \"postal_code2\": 98765,\n  \"country2\": 4,\n  \"username\": \"updated_doe\",\n  \"password\": \"updatedpassword\",\n  \"credit_limit\": 2000.00,\n  \"balance\": 500.00\n}"
 						},
 						"url": {
-							"raw": "http://{{baseUrl}}.com/api/customers/{customerId}",
+							"raw": "http://{{baseUrl}}.com/api/customers/{customer_id}",
 							"protocol": "http",
 							"host": [
 								"{{baseUrl}}",
@@ -824,7 +824,7 @@
 							"path": [
 								"api",
 								"customers",
-								"{customerId}"
+								"{customer_id}"
 							]
 						}
 					},
@@ -836,7 +836,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{baseUrl}}.com/api/customers/{customerId}",
+							"raw": "http://{{baseUrl}}.com/api/customers/{customer_id}",
 							"protocol": "http",
 							"host": [
 								"{{baseUrl}}",
@@ -845,7 +845,7 @@
 							"path": [
 								"api",
 								"customers",
-								"{customerId}"
+								"{customer_id}"
 							]
 						}
 					},
@@ -877,7 +877,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://{{baseUrl}}.com/api/customers/{customerId}",
+							"raw": "http://{{baseUrl}}.com/api/customers/{customer_id}",
 							"protocol": "http",
 							"host": [
 								"{{baseUrl}}",
@@ -886,7 +886,7 @@
 							"path": [
 								"api",
 								"customers",
-								"{customerId}"
+								"{customer_id}"
 							]
 						}
 					},
@@ -946,17 +946,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/bookings/:bookingId",
+							"raw": "{{baseUrl}}/bookings/:booking_id",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"bookings",
-								":bookingId"
+								":booking_id"
 							],
 							"variable": [
 								{
-									"key": "bookingId",
+									"key": "booking_id",
 									"value": ""
 								}
 							]
@@ -974,17 +974,17 @@
 							"raw": "{\n  \"customerCreditUsed\": 600.0,\n  \"amountPaidToDriver\": 180.0\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/bookings/:bookingId",
+							"raw": "{{baseUrl}}/bookings/:booking_id",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"bookings",
-								":bookingId"
+								":booking_id"
 							],
 							"variable": [
 								{
-									"key": "bookingId",
+									"key": "booking_id",
 									"value": ""
 								}
 							]
@@ -998,17 +998,17 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/bookings/:bookingId",
+							"raw": "{{baseUrl}}/bookings/:booking_id",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"bookings",
-								":bookingId"
+								":booking_id"
 							],
 							"variable": [
 								{
-									"key": "bookingId",
+									"key": "booking_id",
 									"value": ""
 								}
 							]

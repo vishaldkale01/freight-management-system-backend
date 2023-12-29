@@ -1,12 +1,13 @@
 
 const CommonValidator = require("../../middleware/validators/CommonValidators");
 const { drivers } = require("../../model");
+const errorResponce = require("../../responses/ErrorResponce");
 const { driverSchema } = require('../../validators/JoiSchema');
 // Getalldrivers
 const Getalldrivers = ('/', async (req, res) => {
   try {
     const driver = await drivers.findAll();
-    if(!driver) res.status(404).json("not found")
+    if(driver.length === 0) return res.status(404).json("Driver not found")
     res.json(driver);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -17,11 +18,11 @@ const Getalldrivers = ('/', async (req, res) => {
 const GetSingledrive = ('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const drivers = await drivers.findByPk(id);
-    if (!drivers) {
+    const driver = await drivers.findByPk(id);
+    if (!driver) {
       res.status(404).json({ error: 'Driver not found' });
     } else {
-      res.json(drivers);
+      res.json(driver);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -32,7 +33,7 @@ const GetSingledrive = ('/:id', async (req, res) => {
 const AddDrive = ('/', async (req, res) => {
     let validate =  CommonValidator(req.body , driverSchema ) 
       if (!validate.validate) {
-        return res.send(validate.data)
+        return errorResponce(res,403, validate.data,"")
       }
   const driverData = req.body;
   try {

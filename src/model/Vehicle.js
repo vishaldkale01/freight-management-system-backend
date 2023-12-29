@@ -18,23 +18,16 @@ module.exports = function (sequelize, DataTypes) {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        currentLocation: {
+        TruckDocument: {
           type: DataTypes.STRING,
           allowNull: true,
         },
-        available: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
-          defaultValue: true,
+        TruckExpiryDate: {
+          type: DataTypes.DATE,
+          allowNull: true,
         },
-        driver_id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'drivers', 
-            key: 'driver_id',
-          },
-        },
+
+        
       },{
         timestamps: true,
         underscored: true,

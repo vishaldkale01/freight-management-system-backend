@@ -3,7 +3,7 @@ module.exports = function (sequelize, DataTypes) {
     const Countries = sequelize.define(
         "countries",
         {
-          Country_id: {
+          country_id: {
               type: DataTypes.INTEGER,
               autoIncrement: true,
               primaryKey: true,

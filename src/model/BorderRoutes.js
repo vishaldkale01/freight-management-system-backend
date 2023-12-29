@@ -1,13 +1,18 @@
 module.exports = function (sequelize, DataTypes) {
   const BorderRoute = sequelize.define(
-    'borderRoutes',
+    'border_Routes',
     {
         route_id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement: true,
-          allowNull: false,
         },
+        route_name : {
+          type : DataTypes.STRING , 
+          allowNull : false,
+          default : "routeA"
+        },
+        
       // Fields for Add
       originCountry: {
         type: DataTypes.INTEGER,
@@ -56,17 +61,21 @@ module.exports = function (sequelize, DataTypes) {
       }  ,
       totalFare: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
-      border_id :  {
-        type : DataTypes.INTEGER
-      }
-      // Fields for Add Borders
-      // border: {
-      //   type: DataTypes.JSON, // Assuming you want to store an array of objects for borders
-      //   // defaultValue: [],
-      //   allowNull : true
+      // borderId :  {
+      //   type : DataTypes.INTEGER,
+      //   references: {
+      //     model: 'borders', 
+      //     key: 'border_id',
+      //   }
       // },
+      // Fields for Add Borders
+      border: {
+        type: DataTypes.JSON, // Assuming you want to store an array of objects for borders
+        // defaultValue: [],
+        allowNull : true
+      },
     },
     {
       timestamps: true,
