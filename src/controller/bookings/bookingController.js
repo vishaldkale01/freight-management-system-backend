@@ -72,6 +72,8 @@ const updateBookingById = async (req, res) => {
       where: { booking_id: booking_id },
     });
 
+    //
+
     if (updatedRows > 0) {
       res.status(200).json({ message: "Booking updated successfully" });
     } else {
